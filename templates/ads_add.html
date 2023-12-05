@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ITCOLX | Добавить объявление
+{% endblock %}
+
+{% block auth_button %}
+
+{% if user.is_authenticated %}
+<div class="btn-group">
+    <button type="button" class="btn btn-outline-light dropdown-toggle mx-2" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+
+        {% if user.profile.image %}
+        <img src="{{ user.profile.image.url }}" width="32" height="32" class="rounded-circle">
+        {% else %}
+        <img src="https://i.pinimg.com/736x/f5/c4/b9/f5c4b99f52e156acd29fd7f9bc5933a2.jpg" alt="mdo" width="32"
+            height="32" class="rounded-circle">
+        {% endif %}
+
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'profile' user.id %}">Личный кабинет</a>
+        <button type="button" class="dropdown-item">
+            Сообщения
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                0
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </button>
+        <a class="dropdown-item" href="{% url 'myads' %}">Мои объявления</a>
+
+        <a class="dropdown-item" href="#">Настройки</a>
+
+
+        <hr class="dropdown-divider">
+        <a class="dropdown-item" href="{% url 'logout' %}"> Выйти</a>
+    </div>
+</div>
+
+{% else %}
+<a href="{% url 'login' %}" class="btn btn-outline-dark">Войти </a>
+<a href="{% url 'register' %}" class="btn btn-warning">Зарегистрироваться</a>
+{% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="container">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative"
+                style="background-color: rgba(255, 255, 255, 0.5);">
+                <p class="card-text mb-auto"><strong>Категория :</strong>{{ ads_form.category}}</p>
+                <p class="card-text mb-auto"><strong>Фотография :</strong>{{ ads_form.image}}</p>
+                <p class="card-text mb-auto"><strong>Название :</strong>{{ ads_form.title}}</p>
+                <p class="card-text mb-auto"><strong>Описание :</strong>{{ ads_form.description}}</p>
+                <p class="card-text mb-auto"><strong>Цена :</strong>{{ ads_form.price}}</p>
+                <p class="card-text mb-auto"><strong>Контакты с продавцом :</strong>{{ ads_form.contact}}</p>
+                <p class="card-text mb-auto"><strong>Адрес :</strong>{{ ads_form.address}}</p>
+                <p class="card-text mb-auto"><strong>Дата создания :</strong>{{ ads_form.created_at}}</p>
+  
+                <button type="submit" class="btn-btn-outline-dark">
+                    Добавить объявление
+                </button>
+                <br>
+            </div>
+        </div>
+    </div>
+  
+  
+  </form>
+{% endblock %}

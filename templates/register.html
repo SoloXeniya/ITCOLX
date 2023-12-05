@@ -1,0 +1,47 @@
+{% extends 'base.html' %} 
+
+{% block title %}
+ITCOLX  |  Регистрация
+{% endblock %}
+
+{% block auth_button %} 
+<a href="{% url 'login' %}" class="btn btn-outline-warning">Войти </a> 
+{% endblock %}
+
+{% block content %} 
+
+<div class ="container" style = "text-align: center;">
+    <div class = "card" >
+        <div class ="card-header">
+            <h5 class ="class-title">
+                Добро пожаловать
+            </h5>
+        </div>
+        <div class = "card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                {{ context_form.username }}<br>
+                <p class="text-danger">{{ context_form.username.error }}</p><br>
+            
+                {{ context_form.first_name }}<br>
+                <p class="text-danger">{{ context_form.first_name.error }}</p><br>
+                {{ context_form.last_name }}<br>
+                <p class="text-danger">{{ context_form.last_name.error }}</p><br>
+                {{ context_form.email }}<br>
+                <p class="text-danger">{{ context_form.email.error }}</p><br>
+                {{ context_form.password }}<br>
+                <p class="text-danger">{{ context_form.password.error }}</p><br>
+
+                <input type="password" name= "password2" required class='form-control'
+                 placeholder = "Подтвердите пароль">
+                 <br>
+            
+                <button class= "btn btn-outline-ptimary" type='submit'>Зарегистрироваться</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %}
+ITCOLX | Главная
+{% endblock %}
+
+{% block auth_button %}
+
+{% if user.is_authenticated %}
+<div class="btn-group">
+    <button type="button" class="btn btn-outline-light dropdown-toggle mx-2" data-toggle="dropdown" aria-haspopup="true"
+        aria-expanded="false">
+        {% if user.profile.image %}
+        <img src="{{ user.profile.image.url }}" width="32" height="32" class="rounded-circle">
+        {% else %}
+        <img src="https://i.pinimg.com/736x/f5/c4/b9/f5c4b99f52e156acd29fd7f9bc5933a2.jpg" alt="mdo" width="32"
+            height="32" class="rounded-circle">
+        {% endif %}
+    </button>
+    <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Личный кабинет</a>
+        <button type="button" class="dropdown-item">
+            Сообщения
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                0
+                <span class="visually-hidden">unread messages</span>
+            </span>
+        </button>
+        <a class="dropdown-item" href="#">Настройки</a>
+        <a class="dropdown-item" href="{% url 'myads' %}">Мои объявления</a>
+        <hr class="dropdown-divider">
+        <a class="dropdown-item" href="{% url 'logout' %}"> Выйти</a>
+    </div>
+</div>
+
+{% else %}
+<a href="{% url 'login' %}" class="btn btn-outline-dark">Войти </a>
+<a href="{% url 'register' %}" class="btn btn-outline-warning">Зарегистрироваться</a>
+{% endif %}
+{% endblock %}
+
+
+{% block content %}
+<section id="golf">
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.5);">
+        <div class="d-flex justify-content-start">
+            <div class="card-image">
+                <div class="container">
+                    <br>
+                    <img class="bd-placeholder-img card-img-top" src="{{ads_detail.image.url}}">
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h3></h3>
+                <p class="card_text"><strong></strong> {{ ads_detail.category }}</p>
+                </h3><br>
+                <h2 class="main-title text-left">{{ ads_detail.title }}</h2>
+                <hr class="hr-style-left" />
+                <p class="card_text"><strong>Описание : </strong>{{ ads_detail.description}}<br>
+                <p class="card_text"><strong>Цена : </strong>{{ ads_detail.price }}<br>
+                <p class="card_text"><strong>Телефонный номер : </strong>{{ ads_detail.contact }}<br>
+                <p class="card_text"><strong>Адрес : </strong>{{ ads_detail.address }}<br>
+                    {% if ads.detail.instagram %}
+                <p class="card_text"><strong>instagram : </strong>{{ ads_detail.instagram}}</p><br>
+                {% endif %}
+                {% if ads.detail.whatcapp%}
+                <p class="card_text"><strong>instagram : </strong>{{ ads_detail.whatcapp}}</p><br>
+                {% endif %}
+                {% if ads.detail.instagram %}
+                <p class="card_text"><strong>telegram : </strong>{{ ads_detail.telegram}}</p><br>
+                {% endif %}
+                <p class="card_text"><strong>Имя продавца : </strong>{{ ads_detail.user }}<br></p>
+                <p class="card_text"><strong>Дата создания карточки : </strong>{{ ads_detail.created_at }}<br></p>
+                <br>
+                {% if ads_detail.user == request.user %}
+                <a href="{% url 'delete_ads' ads_detail.id %}" class="btn-btn-outline-warning">Удалить объявление
+                Удалить объявление </a>
+                {% endif %}
+            </div>
+        </div>
+    </div> 
+
+</section>
+
+{% endblock %}

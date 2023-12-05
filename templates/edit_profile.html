@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block auth_button %}
+<div class="btn-group">
+  <button type="button" class="btn btn-outline-light dropdown-toggle mx-2" data-toggle="dropdown" aria-haspopup="true"
+    aria-expanded="false">
+
+    {% if user.profile.image %}
+    <img src="{{ user.profile.image.url }}" width="32" height="32" class="rounded-circle">
+    {% else %}
+    <img src="https://i.pinimg.com/736x/f5/c4/b9/f5c4b99f52e156acd29fd7f9bc5933a2.jpg" alt="mdo" width="32" height="32"
+      class="rounded-circle">
+    {% endif %}
+
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" href="{% url 'profile' user.id %}">Личный кабинет</a>
+    <button type="button" class="dropdown-item">
+      Сообщения
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        0
+        <span class="visually-hidden">unread messages</span>
+      </span>
+    </button>
+    <a class="dropdown-item" href="{% url 'myads' %}">Мои объявления</a>
+
+    <a class="dropdown-item" href="#">Настройки</a>
+
+
+    <hr class="dropdown-divider">
+    <a class="dropdown-item" href="{% url 'logout' %}"> Выйти</a>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container">
+  <div class="col-md-12">
+    <div class="container" style="background-color: rgba(255, 255, 255, 0.5);">
+      <h2> Редакция профиля</h2>
+      <hr class="hr-style-left">
+
+      <form method="post" enctype="multipart/form-data">
+
+        {% csrf_token %}
+
+        {{user_form.username}}<br>
+        <br>
+        {{ user_form.first_name}}<br>
+        <br>
+        {{ user_form.last_name}}<br>
+        <br>
+        {{ user_form.email}}<br>
+        <br>
+
+        {{ profile_form.as_p}}<br>
+        <br>
+        <button type="submit" class="btn btn-outline-dark">Сохранение изменений</button><br>
+        <br>
+    </div>
+    <br>
+  </div>
+</div>
+</form>
+
+
+
+
+{% endblock %}
